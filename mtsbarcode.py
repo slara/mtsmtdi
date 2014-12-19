@@ -9,24 +9,6 @@ from twisted.python import log
 from twisted.internet.protocol import Protocol
 
 
-class IncompleteNetstring(Exception):
-    """
-    Not enough data to complete a netstring.
-    """
-
-
-class BadNetstring(Exception):
-    """
-    Incorrect netstring format
-    """
-
-
-class OverLength(Exception):
-    """
-    netstring of incorrect length
-    """
-
-
 class IBarCodeService(Interface):
     pass
 
