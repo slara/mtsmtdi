@@ -17,6 +17,7 @@ class BarCodeProtocol(Protocol):
 
     def dataReceived(self, data):
         log.msg("Barcode -> ", data)
+        self.transport.write('Stamped')
 
 
 # BarCode module
