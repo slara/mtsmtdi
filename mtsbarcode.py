@@ -2,7 +2,7 @@
 from twisted.internet import epollreactor
 epollreactor.install()
 from twisted.application import internet, service
-from twisted.internet import protocol
+from twisted.internet import protocol, task
 from zope.interface import Interface, implements
 from twisted.python import components
 from twisted.python import log
@@ -45,6 +45,11 @@ class BarCodeService(service.Service):
 
     def __init__(self):
         log.msg("Starting Service...")
+        t = task.LoopingCall(self.echo)
+        t.start(5)
+
+    def echo(self):
+        log.msg('Hola Mundo!')
 
 
 def makeService(config):
