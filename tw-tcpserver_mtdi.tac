@@ -63,7 +63,7 @@ class PLC_Receiver(protocol.Protocol):
     def do_echo(self, *args):
         """Process an 'echo' command"""
         self.transport.write(' '.join(args) + '\n')
-    
+
 
     def do_update(self, *args):
         message = 'UPDATED 0000'#+ str(kh[dev_int][1])#+str(self.request.getpeername()[1])
@@ -84,9 +84,8 @@ class PLC_Receiver(protocol.Protocol):
                 dddd            corresponde al dev_id con 4 digitos
                 s               corresponde al estado del dev con un digito
                 nnnn		corresponde al send_id, nuemro con 4 digitos correlativo de envios
-#JJ IMPERIAL                ss		corresponde al espesor de la madera
                 p               corresponde a un digito final de mensaje
-	""" 
+	"""
 
 
         # Sends MTDI_ED($PID)

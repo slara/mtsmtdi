@@ -55,30 +55,9 @@ class BarCodeProtocol(Protocol):
         # set client
         client = Client.get_by(code=client)
         # get msg detention code
-        code = Cod_state.query.filter_by(client=client).filter(
-            Cod_state.description.like(det)).one()
-        # get device
-        dev = Device.query.filter_by(client=client).filter(
-            Device.code.like(dev + '%')).one()
-
-        noassign = Cod_state.query.filter_by(client=client).filter(
-            Device.code.like('No asig%')).one()
-        lastweek = datetime.datetime.now() - datetime.timedelta(days=7)
-        det = S_reg.query.filter_by(dev=dev).filter(
-            S_reg.date_s > lastweek).filter(
-                S_reg.state < 1).order_by(desc(S_reg.date_s)).first()
-        if det.code_state != noassign:
-            if det.date_f:
-                return
-            else:
-                if det.cod_state == code:
-                    pass
-        else:
-            det.code_state = code
-            det.user = User.get(dev.last_ope_id)
+        print client.name, msgtype, dev, det, index
 
 
-# BarCode module
 class IBarCodeFactory(Interface):
     pass
 
