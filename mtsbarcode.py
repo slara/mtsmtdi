@@ -12,7 +12,7 @@ from twisted.python import log
 from twisted.internet.protocol import Protocol
 
 sys.path.append(os.path.abspath(
-    '../../mtsolutions/webservice/'
+    '/srv/servers/webservice/'
 ))
 from j import *
 setup_all()
