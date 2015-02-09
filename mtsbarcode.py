@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from datetime import timedelta as td
 from datetime import datetime as dt
 
 from twisted.internet import epollreactor
 epollreactor.install()
 from twisted.application import internet, service
-from twisted.internet import protocol, task
+from twisted.internet import protocol
 from zope.interface import Interface, implements
 from twisted.python import components
 from twisted.python import log
 from twisted.internet.protocol import Protocol
-from sqlalchemy import desc
 
 sys.path.append(os.path.abspath(
     '/srv/servers/webservice/'
@@ -84,13 +82,23 @@ class BarCodeProtocol(Protocol):
         if detention.cod_state is noasign:
             log.msg('DETENTION:', detention.date_s, client.name, dev, code.description)
             detention.cod_state = code
-            detention.user = User.get(device.last_ope_id)
+            try:
+                detention.user = User.get(device.last_ope_id)
+            except:
+                log.msg('NO OPERATOR ASSIGNED')
+                detention.user = None
+
         else:
             if not detention.date_f and (detention.cod_state != code):
                 log.msg('DETENTION:', 'DIV')
+                try:
+                    operator = User.get(device.last_ope_id)
+                except:
+                    log.msg('NO OPERATOR ASSIGNED')
+                    operator = None
                 BS_reg(state=detention.state,
                        code=code.id,
-                       user=device.last_ope_id,
+                       user=operator,
                        date_i=dt.now(),
                        date_s=dt.now(),
                        dev=device.id,
