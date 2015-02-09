@@ -72,6 +72,7 @@ class BarCodeProtocol(Protocol):
         }
         device = Device.get(int(dev))
 
+        print 'handler:', clients[client], codes[det]
         detq = Cod_state.query.filter_by(client_id=clients[client])
         client = Client.get(clients[client])
         code = detq.filter_by(code=codes[det]).one()
