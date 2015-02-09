@@ -70,7 +70,7 @@ class BarCodeProtocol(Protocol):
             '002': 4002,
             '003': 4003
         }
-        device = Device.get(int(13))
+        device = Device.get(int(dev))
 
         detq = Cod_state.query.filter_by(client_id=clients[client])
         client = Client.get(clients[client])
