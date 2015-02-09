@@ -3,7 +3,7 @@ from twisted.application import service
 import mtsbarcode
 
 config = {
-    'barcode_port': 5969,
+    'barcode_port': 8989,
 }
 
 ser = mtsbarcode.makeService(config)

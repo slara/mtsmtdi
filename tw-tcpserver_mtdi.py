@@ -73,7 +73,7 @@ class PLC_Receiver(protocol.Protocol):
     def do_echo(self, *args):
         """Process an 'echo' command"""
         self.transport.write(' '.join(args) + '\n')
-    
+
 
     @run_with_transaction
     def do_update(self, *args):
@@ -95,6 +95,7 @@ class PLC_Receiver(protocol.Protocol):
                 nnnn		corresponde al send_id, nuemro con 4 digitos correlativo de envios
 #JJ IMPERIAL                ss		corresponde al espesor de la madera
                 p               corresponde a un digito final de mensaje
+        """
 
 
         # Sends STAMPED($PID)
