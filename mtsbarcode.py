@@ -64,7 +64,7 @@ class BarCodeProtocol(Protocol):
         if msgtype == '0':
             sendack()
             return
-        clients = {'SIN': 3}
+        clients = {'SIN': 29}
         codes = {
             '001': 4001,
             '002': 4002,
