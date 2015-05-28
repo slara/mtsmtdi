@@ -34,11 +34,11 @@ def run_with_transaction(func):
     return decorated
 
 
-class IBarCodeService(Interface):
+class IMTDIService(Interface):
     pass
 
 
-class BarCodeProtocol(Protocol):
+class MTDIProtocol(Protocol):
 
     def dataReceived(self, data):
         dispatch = {'mt_di': 'detention'}
@@ -107,28 +107,28 @@ class BarCodeProtocol(Protocol):
         sendack()
 
 
-class IBarCodeFactory(Interface):
+class IMTDIFactory(Interface):
     pass
 
 
-class BarCodeFactoryFromService(protocol.ServerFactory):
+class MTDIFactoryFromService(protocol.ServerFactory):
 
-    implements(IBarCodeFactory)
+    implements(IMTDIFactory)
 
-    protocol = BarCodeProtocol
+    protocol = MTDIProtocol
 
     def __init__(self, service):
         self.service = service
 
 
-components.registerAdapter(BarCodeFactoryFromService,
-                           IBarCodeService,
-                           IBarCodeFactory)
+components.registerAdapter(MTDIFactoryFromService,
+                           IMTDIService,
+                           IMTDIFactory)
 
 
-class BarCodeService(service.Service):
+class MTDIService(service.Service):
 
-    implements(IBarCodeService)
+    implements(IMTDIService)
 
     def __init__(self):
         log.msg("Starting Service...")
@@ -136,8 +136,8 @@ class BarCodeService(service.Service):
 
 def makeService(config):
     s = service.MultiService()
-    f = BarCodeService()
-    barcode = internet.TCPServer(int(config['barcode_port']),
-                                 IBarCodeFactory(f))
-    barcode.setServiceParent(s)
+    f = MTDIService()
+    mtdi = internet.TCPServer(int(config['mtdi_port']),
+                                 IMTDIFactory(f))
+    mtdi.setServiceParent(s)
     return s
